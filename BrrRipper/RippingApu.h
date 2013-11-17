@@ -2,18 +2,18 @@
 #define __RIPPINGAPU_H__
 
 #include "../Common.h"
-#include "../Sample.h"
+#include "../Instrument.h"
 
 class RippingApu : public Apu
 {
 public:
 	virtual ~RippingApu();
 
-	List<Sample *> Samples;
+	List<Instrument *> Instruments;
 
 	virtual void WriteByte(unsigned int address, unsigned char value);
 
-	bool Contains(Sample *sample) const;
+	bool Contains(Instrument *instrument) const;
 };
 
 #endif

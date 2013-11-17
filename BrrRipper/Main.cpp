@@ -38,8 +38,12 @@ int Main(const List<String>& arguments)
 		Console::Write("\r   \r");
 
 		Console::WriteLine("Dumping samples...");
-		for (int i = 0; i < apu.Samples.Count(); i++)
-			apu.Samples[i]->Save(outDir + title + " " + i + ".brr");
+		for (int i = 0; i < apu.Instruments.Count(); i++)
+		{
+			auto doc = apu.Instruments[i]->Serialize();
+			BsonSerializer::Serialize(outDir + title + " " + i + ".ins", doc);
+			delete doc;
+		}
 
 		delete [] leftBuffer;
 		delete [] rightBuffer;

@@ -16,22 +16,15 @@ public:
 		unsigned char Data[8];
 	};
 
-	static Sample *Load(const String& fileName);
-
-	Sample();
 	~Sample();
 
 	bool operator ==(const Sample& s) const;
 	bool operator !=(const Sample& s) const;
 
-	void Save(const String& fileName);
+	static Sample *Deserialize(const BsonDocument *document);
+	BsonDocument *Serialize();
 
 	List<Block *> Blocks;
-	bool IsLooping;
-	int LoopOffset;
-
-	// TODO: This is really instrument data, not sample data
-	unsigned char Adsr0, Adsr1, Gain;
 };
 
 #endif

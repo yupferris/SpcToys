@@ -2,8 +2,8 @@
 
 RippingApu::~RippingApu()
 {
-	for (int i = 0; i < Samples.Count(); i++)
-		delete Samples[i];
+	for (int i = 0; i < Instruments.Count(); i++)
+		delete Instruments[i];
 }
 
 void RippingApu::WriteByte(unsigned int address, unsigned char value)
@@ -22,6 +22,7 @@ void RippingApu::WriteByte(unsigned int address, unsigned char value)
 				auto envelope = voice->GetEnvelope();
 
 				auto sample = new Sample();
+				auto instrument = new Instrument(sample);
 
 				int entryAddress = dirAddress + voice->GetSource() * 4;
 				int sampleStartAddress = ReadByte(entryAddress);
@@ -44,20 +45,20 @@ void RippingApu::WriteByte(unsigned int address, unsigned char value)
 					{
 						if (isLooping)
 						{
-							sample->IsLooping = true;
-							sample->LoopOffset = loopStartAddress - sampleStartAddress;
+							instrument->IsLooping = true;
+							instrument->LoopOffset = loopStartAddress - sampleStartAddress;
 						}
 						break;
 					}
 				}
 
-				sample->Adsr0 = envelope->GetAdsr0();
-				sample->Adsr1 = envelope->GetAdsr1();
-				sample->Gain = envelope->GetGain();
+				instrument->Adsr0 = envelope->GetAdsr0();
+				instrument->Adsr1 = envelope->GetAdsr1();
+				instrument->Gain = envelope->GetGain();
 
-				if (!Contains(sample))
+				if (!Contains(instrument))
 				{
-					Samples.Add(sample);
+					Instruments.Add(instrument);
 				}
 				else
 				{
@@ -71,11 +72,11 @@ void RippingApu::WriteByte(unsigned int address, unsigned char value)
 	Apu::WriteByte(address, value);
 }
 
-bool RippingApu::Contains(Sample *sample) const
+bool RippingApu::Contains(Instrument *instrument) const
 {
-	for (int i = 0; i < Samples.Count(); i++)
+	for (int i = 0; i < Instruments.Count(); i++)
 	{
-		if (*Samples[i] == *sample)
+		if (*Instruments[i] == *instrument)
 			return true;
 	}
 	return false;

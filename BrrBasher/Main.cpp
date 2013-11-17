@@ -1,5 +1,5 @@
 #include "../Common.h"
-#include "../Sample.h"
+#include "../Instrument.h"
 
 #include <Windows.h>
 
@@ -44,12 +44,14 @@ public:
 		delete mutex;
 	}
 
-	void LoadSample(Sample *sample, int voiceIndex)
+	void LoadInstrument(Instrument *instrument, int voiceIndex)
 	{
 		mutex->Lock();
 
+		auto sample = instrument->GetSample();
+
 		const int sampleAddress = currentSampleAddress;
-		const int loopAddress = sampleAddress + sample->LoopOffset;
+		const int loopAddress = sampleAddress + instrument->LoopOffset;
 		int dirAddress = voiceIndex * 4;
 		WriteByte(dirAddress, sampleAddress & 0xff);
 		WriteByte(dirAddress + 1, (sampleAddress >> 8) & 0xff);
@@ -72,9 +74,9 @@ public:
 		dsp->SetRegister(voiceIndex * 0x10 + 0x02, 0x00); // Voice pitch low
 		dsp->SetRegister(voiceIndex * 0x10 + 0x03, 0x10); // Voice pitch high
 		dsp->SetRegister(voiceIndex * 0x10 + 0x04, voiceIndex); // Voice source
-		dsp->SetRegister(voiceIndex * 0x10 + 0x05, sample->Adsr0);
-		dsp->SetRegister(voiceIndex * 0x10 + 0x06, sample->Adsr1);
-		dsp->SetRegister(voiceIndex * 0x10 + 0x07, sample->Gain);
+		dsp->SetRegister(voiceIndex * 0x10 + 0x05, instrument->Adsr0);
+		dsp->SetRegister(voiceIndex * 0x10 + 0x06, instrument->Adsr1);
+		dsp->SetRegister(voiceIndex * 0x10 + 0x07, instrument->Gain);
 
 		mutex->Unlock();
 	}
@@ -187,13 +189,17 @@ int Main(const List<String>& arguments)
 	try
 	{
 		if (!arguments.Count())
-			throw FSL_EXCEPTION("Need some brr's, fucktard");
+			throw FSL_EXCEPTION("Need some ins', fucktard");
 
-		List<Sample *> samples;
+		List<Instrument *> instruments;
 
-		Console::WriteLine("Loading samples...");
+		Console::WriteLine("Loading instruments...");
 		for (int i = 0; i < arguments.Count(); i++)
-			samples.Add(Sample::Load(arguments[i]));
+		{
+			auto doc = BsonSerializer::Deserialize(arguments[i]);
+			instruments.Add(Instrument::Deserialize(doc));
+			delete doc;
+		}
 
 		Console::WriteLine("Initializing audio driver...");
 		auto driver = AudioDriverFactory::CreateDefault();
@@ -201,8 +207,8 @@ int Main(const List<String>& arguments)
 
 		Console::WriteLine("Initializing basher...");
 		Basher basher(driver);
-		for (int i = 0; i < samples.Count(); i++)
-			basher.LoadSample(samples[i], i);
+		for (int i = 0; i < instruments.Count(); i++)
+			basher.LoadInstrument(instruments[i], i);
 
 		Console::WriteLine("And now we blast like there's no tomorrow :)");
 		Console::WriteLine("ESC quits.");
@@ -234,8 +240,8 @@ int Main(const List<String>& arguments)
 
 		delete driver;
 
-		for (int i = 0; i < samples.Count(); i++)
-			delete samples[i];
+		for (int i = 0; i < instruments.Count(); i++)
+			delete instruments[i];
 	}
 	catch (const Exception& e)
 	{
