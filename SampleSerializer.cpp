@@ -4,15 +4,14 @@ Sample *SampleSerializer::Deserialize(const BsonObject *object)
 {
 	auto ret = new Sample();
 
-	auto blocksArray = object->GetArrayValue("blocks");
-	for (int i = 0; i < blocksArray.Count(); i++)
+	auto blockData = object->GetBinaryValue("blockdata");
+	for (int i = 0; i < blockData.Count(); i += 9)
 	{
-		auto blockBytes = ((BsonBinaryElement *)blocksArray[i])->GetValue();
 		auto block = new Sample::Block();
 		ret->Blocks.Add(block);
-		block->Header = blockBytes[0];
+		block->Header = blockData[i];
 		for (int j = 0; j < 8; j++)
-			block->Data[j] = blockBytes[j + 1];
+			block->Data[j] = blockData[i + j + 1];
 	}
 
 	return ret;
@@ -21,20 +20,16 @@ Sample *SampleSerializer::Deserialize(const BsonObject *object)
 BsonObject *SampleSerializer::Serialize(const Sample *sample)
 {
 	auto ret = new BsonObject();
-
-	auto blockArray = new BsonArrayElement("blocks");
-	ret->AddElement(blockArray);
+	
+	List<unsigned char> blockData;
 	for (int i = 0; i < sample->Blocks.Count(); i++)
 	{
-		List<unsigned char> blockBytes;
-
 		auto block = sample->Blocks[i];
-		blockBytes.Add(block->Header);
+		blockData.Add(block->Header);
 		for (int j = 0; j < 8; j++)
-			blockBytes.Add(block->Data[j]);
-
-		blockArray->AddBinary(blockBytes);
+			blockData.Add(block->Data[j]);
 	}
+	ret->AddBinary("blockdata", blockData);
 
 	return ret;
 }
