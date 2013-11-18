@@ -5,11 +5,15 @@
     <ClCompile Include="RippingApu.cpp" />
     <ClCompile Include="..\Sample.cpp" />
     <ClCompile Include="..\Instrument.cpp" />
+    <ClCompile Include="..\InstrumentSerializer.cpp" />
+    <ClCompile Include="..\SampleSerializer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RippingApu.h" />
     <ClInclude Include="..\Common.h" />
     <ClInclude Include="..\Sample.h" />
     <ClInclude Include="..\Instrument.h" />
+    <ClInclude Include="..\InstrumentSerializer.h" />
+    <ClInclude Include="..\SampleSerializer.h" />
   </ItemGroup>
 </Project>

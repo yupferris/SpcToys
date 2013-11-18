@@ -13,9 +13,6 @@ public:
 	bool operator ==(const Instrument& s) const;
 	bool operator !=(const Instrument& s) const;
 
-	static Instrument *Deserialize(const BsonDocument *document);
-	BsonDocument *Serialize();
-
 	Sample *GetSample() const;
 
 	bool IsLooping;

@@ -1,5 +1,6 @@
 #include "../Common.h"
 #include "RippingApu.h"
+#include "../InstrumentSerializer.h"
 
 int Main(const List<String>& arguments)
 {
@@ -40,7 +41,7 @@ int Main(const List<String>& arguments)
 		Console::WriteLine("Dumping samples...");
 		for (int i = 0; i < apu.Instruments.Count(); i++)
 		{
-			auto doc = apu.Instruments[i]->Serialize();
+			auto doc = InstrumentSerializer::Serialize(apu.Instruments[i]);
 			BsonSerializer::Serialize(outDir + title + " " + i + ".ins", doc);
 			delete doc;
 		}

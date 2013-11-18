@@ -83,13 +83,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Instrument.cpp" />
+    <ClCompile Include="..\InstrumentSerializer.cpp" />
     <ClCompile Include="..\Sample.cpp" />
+    <ClCompile Include="..\SampleSerializer.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common.h" />
     <ClInclude Include="..\Instrument.h" />
+    <ClInclude Include="..\InstrumentSerializer.h" />
     <ClInclude Include="..\Sample.h" />
+    <ClInclude Include="..\SampleSerializer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,6 @@
 #include "../Common.h"
 #include "../Instrument.h"
+#include "../InstrumentSerializer.h"
 
 #include <Windows.h>
 
@@ -197,7 +198,7 @@ int Main(const List<String>& arguments)
 		for (int i = 0; i < arguments.Count(); i++)
 		{
 			auto doc = BsonSerializer::Deserialize(arguments[i]);
-			instruments.Add(Instrument::Deserialize(doc));
+			instruments.Add(InstrumentSerializer::Deserialize(doc));
 			delete doc;
 		}
 

@@ -21,9 +21,6 @@ public:
 	bool operator ==(const Sample& s) const;
 	bool operator !=(const Sample& s) const;
 
-	static Sample *Deserialize(const BsonDocument *document);
-	BsonDocument *Serialize();
-
 	List<Block *> Blocks;
 };
 
