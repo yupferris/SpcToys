@@ -6,8 +6,8 @@
 class SampleSerializer
 {
 public:
-	static Sample *Deserialize(const BsonDocument *document);
-	static BsonDocument *Serialize(const Sample *sample);
+	static Sample *Deserialize(const BsonObject *object);
+	static BsonObject *Serialize(const Sample *sample);
 };
 
 #endif

@@ -1,10 +1,10 @@
 #include "SampleSerializer.h"
 
-Sample *SampleSerializer::Deserialize(const BsonDocument *document)
+Sample *SampleSerializer::Deserialize(const BsonObject *object)
 {
 	auto ret = new Sample();
 
-	auto blocksArray = document->GetArrayValue("blocks");
+	auto blocksArray = object->GetArrayValue("blocks");
 	for (int i = 0; i < blocksArray.Count(); i++)
 	{
 		auto blockBytes = ((BsonBinaryElement *)blocksArray[i])->GetValue();
@@ -18,9 +18,9 @@ Sample *SampleSerializer::Deserialize(const BsonDocument *document)
 	return ret;
 }
 
-BsonDocument *SampleSerializer::Serialize(const Sample *sample)
+BsonObject *SampleSerializer::Serialize(const Sample *sample)
 {
-	auto ret = new BsonDocument();
+	auto ret = new BsonObject();
 
 	auto blockArray = new BsonArrayElement("blocks");
 	ret->AddElement(blockArray);

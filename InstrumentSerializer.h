@@ -7,8 +7,8 @@
 class InstrumentSerializer
 {
 public:
-	static Instrument *Deserialize(const BsonDocument *document);
-	static BsonDocument *Serialize(const Instrument *instrument);
+	static Instrument *Deserialize(const BsonObject *object);
+	static BsonObject *Serialize(const Instrument *instrument);
 };
 
 #endif

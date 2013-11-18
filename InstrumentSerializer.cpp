@@ -1,27 +1,27 @@
 #include "InstrumentSerializer.h"
 #include "SampleSerializer.h"
 
-Instrument *InstrumentSerializer::Deserialize(const BsonDocument *document)
+Instrument *InstrumentSerializer::Deserialize(const BsonObject *object)
 {
-	auto sample = SampleSerializer::Deserialize(document->GetDocumentValue("sample"));
+	auto sample = SampleSerializer::Deserialize(object->GetObjectValue("sample"));
 
 	auto ret = new Instrument(sample);
 
-	ret->IsLooping = document->GetBoolValue("islooping");
-	ret->LoopOffset = document->GetInt32Value("loopoffset");
-	ret->Adsr0 = document->GetInt32Value("adsr0");
-	ret->Adsr1 = document->GetInt32Value("adsr1");
-	ret->Gain = document->GetInt32Value("gain");
+	ret->IsLooping = object->GetBoolValue("islooping");
+	ret->LoopOffset = object->GetInt32Value("loopoffset");
+	ret->Adsr0 = object->GetInt32Value("adsr0");
+	ret->Adsr1 = object->GetInt32Value("adsr1");
+	ret->Gain = object->GetInt32Value("gain");
 
 	return ret;
 }
 
-BsonDocument *InstrumentSerializer::Serialize(const Instrument *instrument)
+BsonObject *InstrumentSerializer::Serialize(const Instrument *instrument)
 {
-	auto ret = new BsonDocument();
+	auto ret = new BsonObject();
 
 	auto sample = instrument->GetSample();
-	ret->AddDocument("sample", SampleSerializer::Serialize(sample));
+	ret->AddObject("sample", SampleSerializer::Serialize(sample));
 
 	ret->AddBool("islooping", instrument->IsLooping);
 	ret->AddInt32("loopoffset", instrument->LoopOffset);
