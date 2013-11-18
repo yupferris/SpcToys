@@ -7,20 +7,17 @@
 class Instrument
 {
 public:
-	Instrument(Sample *sample);
+	Instrument();
 	~Instrument();
 
 	bool operator ==(const Instrument& s) const;
 	bool operator !=(const Instrument& s) const;
 
-	Sample *GetSample() const;
+	Sample *Sample;
 
 	bool IsLooping;
 	int LoopOffset;
 	unsigned char Adsr0, Adsr1, Gain;
-
-private:
-	Sample *sample;
 };
 
 #endif

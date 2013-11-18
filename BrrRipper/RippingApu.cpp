@@ -21,8 +21,10 @@ void RippingApu::WriteByte(unsigned int address, unsigned char value)
 				auto voice = dsp->GetVoice(i);
 				auto envelope = voice->GetEnvelope();
 
+				auto instrument = new Instrument();
+
 				auto sample = new Sample();
-				auto instrument = new Instrument(sample);
+				instrument->Sample = sample;
 
 				int entryAddress = dirAddress + voice->GetSource() * 4;
 				int sampleStartAddress = ReadByte(entryAddress);

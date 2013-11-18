@@ -49,7 +49,7 @@ public:
 	{
 		mutex->Lock();
 
-		auto sample = instrument->GetSample();
+		auto sample = instrument->Sample;
 
 		const int sampleAddress = currentSampleAddress;
 		const int loopAddress = sampleAddress + instrument->LoopOffset;

@@ -1,8 +1,8 @@
 #include "Instrument.h"
 
-Instrument::Instrument(Sample *sample)
+Instrument::Instrument()
 {
-	this->sample = sample;
+	Sample = nullptr;
 
 	IsLooping = false;
 	LoopOffset = 0;
@@ -11,12 +11,13 @@ Instrument::Instrument(Sample *sample)
 
 Instrument::~Instrument()
 {
-	delete sample;
+	if (Sample)
+		delete Sample;
 }
 
 bool Instrument::operator ==(const Instrument& i) const
 {
-	if (*sample != *i.sample ||
+	if (*Sample != *i.Sample ||
 		IsLooping != i.IsLooping ||
 		LoopOffset != i.LoopOffset ||
 		Adsr0 != i.Adsr0 ||
@@ -29,9 +30,4 @@ bool Instrument::operator ==(const Instrument& i) const
 bool Instrument::operator !=(const Instrument& i) const
 {
 	return !(*this == i);
-}
-
-Sample *Instrument::GetSample() const
-{
-	return sample;
 }
