@@ -197,9 +197,9 @@ int Main(const List<String>& arguments)
 		Console::WriteLine("Loading instruments...");
 		for (int i = 0; i < arguments.Count(); i++)
 		{
-			auto doc = BsonSerializer::Deserialize(arguments[i]);
-			instruments.Add(InstrumentSerializer::Deserialize(doc));
-			delete doc;
+			auto obj = BsonSerializer::Deserialize(arguments[i]);
+			instruments.Add(InstrumentSerializer::Deserialize(obj));
+			delete obj;
 		}
 
 		Console::WriteLine("Initializing audio driver...");

@@ -41,9 +41,9 @@ int Main(const List<String>& arguments)
 		Console::WriteLine("Dumping samples...");
 		for (int i = 0; i < apu.Instruments.Count(); i++)
 		{
-			auto doc = InstrumentSerializer::Serialize(apu.Instruments[i]);
-			BsonSerializer::Serialize(outDir + title + " " + i + ".ins", doc);
-			delete doc;
+			auto obj = InstrumentSerializer::Serialize(apu.Instruments[i]);
+			BsonSerializer::Serialize(outDir + title + " " + i + ".ins", obj);
+			delete obj;
 		}
 
 		delete [] leftBuffer;
