@@ -198,7 +198,8 @@ int Main(const List<String>& arguments)
 		for (int i = 0; i < arguments.Count(); i++)
 		{
 			auto obj = BsonSerializer::Deserialize(arguments[i]);
-			instruments.Add(InstrumentSerializer::Deserialize(obj));
+			auto instrument = InstrumentSerializer::Deserialize(obj);
+			instruments.Add(instrument);
 			delete obj;
 		}
 

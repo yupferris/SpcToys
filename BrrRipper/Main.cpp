@@ -12,11 +12,10 @@ int Main(const List<String>& arguments)
 		auto spcFileName = arguments[0];
 		auto outDir = arguments[1];
 
-		Console::WriteLine("Loading SPC...");
 		auto spc = Spc::Load(spcFileName);
 		auto title = spc->GetId666Tag()->GetSongTitle();
+		Console::WriteLine(title);
 
-		Console::WriteLine("Initializing APU...");
 		RippingApu apu;
 		apu.SetState(*spc);
 
@@ -27,7 +26,6 @@ int Main(const List<String>& arguments)
 		auto leftBuffer = new short[bufferSize];
 		auto rightBuffer = new short[bufferSize];
 
-		Console::WriteLine("Running...");
 		const char chars[] = { '-', '/', '|', '\\' };
 		const int numChars = 4;
 		int charIndex = 0;
@@ -38,7 +36,6 @@ int Main(const List<String>& arguments)
 		}
 		Console::Write("\r   \r");
 
-		Console::WriteLine("Dumping samples...");
 		for (int i = 0; i < apu.Instruments.Count(); i++)
 		{
 			auto obj = InstrumentSerializer::Serialize(apu.Instruments[i]);

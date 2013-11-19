@@ -11,7 +11,6 @@ void RippingApu::WriteByte(unsigned int address, unsigned char value)
 	if ((address & 0xffff) == 0xf3 && GetDspRegAddress() == 0x4c && value)
 	{
 		auto dsp = GetDsp();
-		int dirAddress = dsp->GetSourceDir() * 0x100;
 
 		unsigned char voiceMask = value;
 		for (int i = 0; i < Dsp::NumVoices; i++)
@@ -26,11 +25,9 @@ void RippingApu::WriteByte(unsigned int address, unsigned char value)
 				auto sample = new Sample();
 				instrument->Sample = sample;
 
-				int entryAddress = dirAddress + voice->GetSource() * 4;
-				int sampleStartAddress = ReadByte(entryAddress);
-				sampleStartAddress |= ReadByte(entryAddress + 1) << 8;
-				int loopStartAddress = ReadByte(entryAddress + 2);
-				loopStartAddress |= ReadByte(entryAddress + 3) << 8;
+				int source = voice->GetSource();
+				unsigned int sampleStartAddress = dsp->ReadSourceDirStartAddress(source);
+				unsigned int loopStartAddress = dsp->ReadSourceDirLoopAddress(source);
 
 				int currentAddress = sampleStartAddress;
 				while (true)
