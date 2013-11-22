@@ -14,7 +14,6 @@ int Main(const List<String>& arguments)
 
 		auto spc = Spc::Load(spcFileName);
 		auto title = spc->GetId666Tag()->GetSongTitle();
-		Console::WriteLine(title);
 
 		RippingApu apu;
 		apu.SetState(*spc);
@@ -51,6 +50,11 @@ int Main(const List<String>& arguments)
 	catch (const Exception& e)
 	{
 		Console::WriteLine("ERROR: " + e.GetMsg());
+		return 1;
+	}
+	catch (...)
+	{
+		Console::WriteLine("Woah, big error...");
 		return 1;
 	}
 
