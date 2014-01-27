@@ -1,0 +1,14 @@
+                  DO WHAT THE FUCK YOU WANT TO
+   AND DON'T BLAME ME IF IT DOESN'T FUCKING WORK PUBLIC LICENSE
+                      Version 1, June 2013
+
+ Copyright (C) 2013 Jake "Ferris" Taylor <yupferris@gmail.com>
+
+ This software is provided 'as-is', without any express or implied
+ warranty. In no event will the author(s) be held liable for any
+ damages arising from the use and/or misuse of this software.
+
+ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+  0. DO WHAT THE FUCK YOU WANT TO, as long as you:
+  1. DON'T BLAME ME IF IT DOESN'T FUCKING WORK.
