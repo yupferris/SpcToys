@@ -17,6 +17,12 @@ bool Sample::Block::operator !=(const Block& b) const
 	return !(*this == b);
 }
 
+Sample::Sample()
+{
+	IsLooping = false;
+	LoopStartBlock = LoopEndBlock = 0;
+}
+
 Sample::~Sample()
 {
 	for (int i = 0; i < Blocks.Count(); i++)
@@ -25,7 +31,10 @@ Sample::~Sample()
 
 bool Sample::operator ==(const Sample& s) const
 {
-	if (Blocks.Count() != s.Blocks.Count())
+	if (IsLooping != s.IsLooping ||
+		LoopStartBlock != s.LoopStartBlock ||
+		LoopEndBlock != s.LoopEndBlock ||
+		Blocks.Count() != s.Blocks.Count())
 		return false;
 	for (int i = 0; i < Blocks.Count(); i++)
 	{

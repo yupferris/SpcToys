@@ -44,8 +44,9 @@ void RippingApu::WriteByte(unsigned int address, unsigned char value)
 					{
 						if (isLooping)
 						{
-							instrument->IsLooping = true;
-							instrument->LoopOffset = loopStartAddress - sampleStartAddress;
+							sample->IsLooping = true;
+							sample->LoopStartBlock = (loopStartAddress - sampleStartAddress) / 9;
+							sample->LoopEndBlock = (currentAddress - 9 - sampleStartAddress) / 9;
 						}
 						break;
 					}

@@ -22,8 +22,8 @@ public:
 
 		dsp->SetRegister(0x0c, 0x7f); // Vol l
 		dsp->SetRegister(0x1c, 0x7f); // Vol r
-		dsp->SetRegister(0x2c, 0x7f); // Echo vol l
-		dsp->SetRegister(0x3c, 0x7f); // Echo vol r
+		dsp->SetRegister(0x2c, 0x00); // Echo vol l
+		dsp->SetRegister(0x3c, 0x00); // Echo vol r
 		dsp->SetRegister(0x6c, 0x20); // Flg
 		dsp->SetRegister(0x5d, 0x00); // Source dir
 
@@ -52,7 +52,7 @@ public:
 		auto sample = instrument->Sample;
 
 		const int sampleAddress = currentSampleAddress;
-		const int loopAddress = sampleAddress + instrument->LoopOffset;
+		const int loopAddress = sampleAddress + sample->LoopStartBlock * 9;
 		int dirAddress = voiceIndex * 4;
 		WriteByte(dirAddress, sampleAddress & 0xff);
 		WriteByte(dirAddress + 1, (sampleAddress >> 8) & 0xff);

@@ -3,9 +3,6 @@
 Instrument::Instrument()
 {
 	Sample = nullptr;
-
-	IsLooping = false;
-	LoopOffset = 0;
 	Adsr0 = Adsr1 = Gain = 0;
 }
 
@@ -18,8 +15,6 @@ Instrument::~Instrument()
 bool Instrument::operator ==(const Instrument& i) const
 {
 	if (*Sample != *i.Sample ||
-		IsLooping != i.IsLooping ||
-		LoopOffset != i.LoopOffset ||
 		Adsr0 != i.Adsr0 ||
 		Adsr1 != i.Adsr1 ||
 		Gain != i.Gain)

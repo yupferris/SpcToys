@@ -14,10 +14,7 @@ public:
 	bool operator !=(const Instrument& s) const;
 
 	Sample *Sample;
-
-	bool IsLooping;
-	int LoopOffset;
-	unsigned char Adsr0, Adsr1, Gain;
+	int Adsr0, Adsr1, Gain;
 };
 
 #endif

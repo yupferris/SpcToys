@@ -14,6 +14,10 @@ Sample *SampleSerializer::Deserialize(const BsonObject *object)
 			block->Data[j] = blockData[i + j + 1];
 	}
 
+	object->TryGetElementValue("islooping", ret->IsLooping);
+	object->TryGetElementValue("loopstartblock", ret->LoopStartBlock);
+	object->TryGetElementValue("loopendblock", ret->LoopEndBlock);
+
 	return ret;
 }
 
@@ -30,6 +34,10 @@ BsonObject *SampleSerializer::Serialize(const Sample *sample)
 			blockData.Add(block->Data[j]);
 	}
 	ret->AddBinary("blockdata", blockData);
+
+	ret->AddBool("islooping", sample->IsLooping);
+	ret->AddInt32("loopstartblock", sample->LoopStartBlock);
+	ret->AddInt32("loopendblock", sample->LoopEndBlock);
 
 	return ret;
 }

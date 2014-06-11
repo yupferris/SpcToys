@@ -16,12 +16,15 @@ public:
 		unsigned char Data[8];
 	};
 
+	Sample();
 	~Sample();
 
 	bool operator ==(const Sample& s) const;
 	bool operator !=(const Sample& s) const;
 
 	List<Block *> Blocks;
+	bool IsLooping;
+	int LoopStartBlock, LoopEndBlock;
 };
 
 #endif
